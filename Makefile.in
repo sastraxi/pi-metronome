@@ -1,0 +1,11 @@
+CC=@CC@
+LD=@CC@
+CFLAGS=@FLAGS@
+
+program: program.o
+	$(LD) -o $@ $^
+
+.PHONY: clean
+clean:
+	rm -f program *.o
+
