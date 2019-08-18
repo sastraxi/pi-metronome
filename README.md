@@ -2,7 +2,7 @@
 
 Install dependencies:
 ```
-sudo apt install build-essential autotools-dev autoconf automake libtool
+sudo apt install build-essential autotools-dev autoconf automake libtool libfftw3-dev
 ```
 
 Build the program:
@@ -23,5 +23,6 @@ https://stackoverflow.com/questions/2531827/what-are-makefile-am-and-makefile-in
 ## Libraries used
 
 * [dr_wav](https://mackron.github.io/dr_wav) (included as `dr_wav.h`)
-* 
+* [fftw3](http://www.fftw.org/)
+
 

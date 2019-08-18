@@ -101,7 +101,7 @@ am__installdirs = "$(DESTDIR)$(bindir)"
 PROGRAMS = $(bin_PROGRAMS)
 am_program_OBJECTS = program.$(OBJEXT)
 program_OBJECTS = $(am_program_OBJECTS)
-program_LDADD = $(LDADD)
+program_DEPENDENCIES =
 AM_V_P = $(am__v_P_@AM_V@)
 am__v_P_ = $(am__v_P_@AM_DEFAULT_V@)
 am__v_P_0 = false
@@ -244,6 +244,7 @@ top_build_prefix = @top_build_prefix@
 top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
 program_SOURCES = program.c
+program_LDADD = -lfftw3
 all: all-am
 
 .SUFFIXES:

@@ -7,3 +7,6 @@ AC_CONFIG_FILES([
  src/Makefile
 ])
 AC_OUTPUT
+AC_SEARCH_LIBS([fftw_malloc], [fftw3], [], [
+  AC_MSG_ERROR([unable to find fftw3()])
+])
