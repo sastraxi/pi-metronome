@@ -1,7 +1,7 @@
 #include <stdio.h>
 
 #define DR_WAV_IMPLEMENTATION
-#include "drwav.h"
+#include "dr_wav.h"
 
 int main()
 {
@@ -9,3 +9,4 @@ int main()
    printf("Hello, World!");
    return 0;
 }
+
