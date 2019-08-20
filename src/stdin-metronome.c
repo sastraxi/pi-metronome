@@ -4,6 +4,7 @@
 #include <stdint.h>
 #include <stdio.h>
 #include <string.h>
+#include <limits.h>
 
 #define SEC_TO_NANOSEC 1000000000
 #define M_PI 3.14159265358979323846
@@ -27,12 +28,12 @@ int main()
 
    int countdown_to_fill = N;
    int write_ptr = 0, read_ptr = 0; // % ring_buffer_size to make sense of it
-   uint16_t *ring_buf;
+   int16_t *ring_buf;
    double *in;
    fftw_complex *out;
    fftw_plan my_plan;
 
-   ring_buf = (uint16_t*) fftw_malloc((size_t) RING_BUFFER_SIZE * sizeof(uint16_t));
+   ring_buf = (int16_t*) fftw_malloc((size_t) RING_BUFFER_SIZE * sizeof(int16_t));
    in = (double*) fftw_malloc(sizeof(double) * N);
    out = (fftw_complex*) fftw_malloc(sizeof(fftw_complex) * N);
 
@@ -45,7 +46,7 @@ int main()
       /* get new data from stdin */
       if (write_ptr + CHUNK <= RING_BUFFER_SIZE)
       {
-         int rc = fread(&ring_buf[write_ptr], sizeof(uint16_t), CHUNK, stdin);
+         int rc = fread(&ring_buf[write_ptr], sizeof(int16_t), CHUNK, stdin);
          if (rc != CHUNK)
          {
             printf("EOF or error occurred");
@@ -57,7 +58,7 @@ int main()
          int rc, to_read;
          
          to_read = RING_BUFFER_SIZE - write_ptr;
-         rc = fread(&ring_buf[write_ptr], sizeof(uint16_t), to_read, stdin);
+         rc = fread(&ring_buf[write_ptr], sizeof(int16_t), to_read, stdin);
          if (rc != to_read)
          {
             printf("EOF or error occurred");
@@ -65,7 +66,7 @@ int main()
          }
          
          to_read = CHUNK - to_read;
-         rc = fread(ring_buf, sizeof(uint16_t), to_read, stdin);
+         rc = fread(ring_buf, sizeof(int16_t), to_read, stdin);
          if (rc != to_read)
          {
             printf("EOF or error occurred");
@@ -86,7 +87,7 @@ int main()
       for (int x = 0; x < N; ++x)
       {
          double multiplier = 0.5 * (1.0 - cos(2.0 * M_PI * x/N_1));
-         in[x] = multiplier * (double) ring_buf[(read_ptr + x) % RING_BUFFER_SIZE];
+         in[x] = multiplier * (double) ring_buf[(read_ptr + x) % RING_BUFFER_SIZE] / (double) SHRT_MAX;
       }
 
       /* fast fourier go! */
@@ -109,7 +110,7 @@ int main()
       }
 
       /* print to the console (later: turn on an LED!) */
-      if (max > 2000) {
+      if (max > 20) {
          printf("%.2f-%.2f hz: %f\n", max_l_freq, max_h_freq, max);
       }
 
