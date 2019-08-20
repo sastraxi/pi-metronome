@@ -28,7 +28,7 @@ int main(int argc, char** argv)
    const int N = 1024;
    const double N_1 = N - 1;
    const int half_N = N/2;
-   const int SKIP = N/4;   
+   const int SKIP = N/16;   
 
    if (argc != 2) {
       printf("Usage: %s <path-to-wav>\n", argv[0]);
