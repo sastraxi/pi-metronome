@@ -86,7 +86,7 @@ POST_INSTALL = :
 NORMAL_UNINSTALL = :
 PRE_UNINSTALL = :
 POST_UNINSTALL = :
-bin_PROGRAMS = program$(EXEEXT) ffttest$(EXEEXT)
+bin_PROGRAMS = program$(EXEEXT) ffttest$(EXEEXT) metronome$(EXEEXT)
 subdir = src
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
 am__aclocal_m4_deps = $(top_srcdir)/configure.ac
@@ -99,11 +99,12 @@ CONFIG_CLEAN_FILES =
 CONFIG_CLEAN_VPATH_FILES =
 am__installdirs = "$(DESTDIR)$(bindir)"
 PROGRAMS = $(bin_PROGRAMS)
-am_ffttest_OBJECTS = ffttest-fft-test.$(OBJEXT)
+am_ffttest_OBJECTS = fft-test.$(OBJEXT)
 ffttest_OBJECTS = $(am_ffttest_OBJECTS)
 ffttest_DEPENDENCIES =
-ffttest_LINK = $(CCLD) $(ffttest_CFLAGS) $(CFLAGS) $(AM_LDFLAGS) \
-	$(LDFLAGS) -o $@
+am_metronome_OBJECTS = cli-metronome.$(OBJEXT)
+metronome_OBJECTS = $(am_metronome_OBJECTS)
+metronome_DEPENDENCIES =
 am_program_OBJECTS = program.$(OBJEXT)
 program_OBJECTS = $(am_program_OBJECTS)
 program_DEPENDENCIES =
@@ -123,10 +124,6 @@ DEFAULT_INCLUDES = -I.@am__isrc@ -I$(top_builddir)
 depcomp = $(SHELL) $(top_srcdir)/depcomp
 am__depfiles_maybe = depfiles
 am__mv = mv -f
-AM_V_lt = $(am__v_lt_@AM_V@)
-am__v_lt_ = $(am__v_lt_@AM_DEFAULT_V@)
-am__v_lt_0 = --silent
-am__v_lt_1 = 
 COMPILE = $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) \
 	$(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS)
 AM_V_CC = $(am__v_CC_@AM_V@)
@@ -139,8 +136,9 @@ AM_V_CCLD = $(am__v_CCLD_@AM_V@)
 am__v_CCLD_ = $(am__v_CCLD_@AM_DEFAULT_V@)
 am__v_CCLD_0 = @echo "  CCLD    " $@;
 am__v_CCLD_1 = 
-SOURCES = $(ffttest_SOURCES) $(program_SOURCES)
-DIST_SOURCES = $(ffttest_SOURCES) $(program_SOURCES)
+SOURCES = $(ffttest_SOURCES) $(metronome_SOURCES) $(program_SOURCES)
+DIST_SOURCES = $(ffttest_SOURCES) $(metronome_SOURCES) \
+	$(program_SOURCES)
 am__can_run_installinfo = \
   case $$AM_UPDATE_INFO_DIR in \
     n|no|NO) false;; \
@@ -256,7 +254,8 @@ program_SOURCES = program.c
 program_LDADD = -lfftw3 -lm
 ffttest_SOURCES = fft-test.c
 ffttest_LDADD = -lfftw3 -lm
-ffttest_CFLAGS = -g
+metronome_SOURCES = cli-metronome.c
+metronome_LDADD = -lfftw3 -lm
 all: all-am
 
 .SUFFIXES:
@@ -335,7 +334,11 @@ clean-binPROGRAMS:
 
 ffttest$(EXEEXT): $(ffttest_OBJECTS) $(ffttest_DEPENDENCIES) $(EXTRA_ffttest_DEPENDENCIES) 
 	@rm -f ffttest$(EXEEXT)
-	$(AM_V_CCLD)$(ffttest_LINK) $(ffttest_OBJECTS) $(ffttest_LDADD) $(LIBS)
+	$(AM_V_CCLD)$(LINK) $(ffttest_OBJECTS) $(ffttest_LDADD) $(LIBS)
+
+metronome$(EXEEXT): $(metronome_OBJECTS) $(metronome_DEPENDENCIES) $(EXTRA_metronome_DEPENDENCIES) 
+	@rm -f metronome$(EXEEXT)
+	$(AM_V_CCLD)$(LINK) $(metronome_OBJECTS) $(metronome_LDADD) $(LIBS)
 
 program$(EXEEXT): $(program_OBJECTS) $(program_DEPENDENCIES) $(EXTRA_program_DEPENDENCIES) 
 	@rm -f program$(EXEEXT)
@@ -347,7 +350,8 @@ mostlyclean-compile:
 distclean-compile:
 	-rm -f *.tab.c
 
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ffttest-fft-test.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/cli-metronome.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/fft-test.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/program.Po@am__quote@
 
 .c.o:
@@ -363,20 +367,6 @@ distclean-compile:
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='$<' object='$@' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(COMPILE) -c -o $@ `$(CYGPATH_W) '$<'`
-
-ffttest-fft-test.o: fft-test.c
-@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(ffttest_CFLAGS) $(CFLAGS) -MT ffttest-fft-test.o -MD -MP -MF $(DEPDIR)/ffttest-fft-test.Tpo -c -o ffttest-fft-test.o `test -f 'fft-test.c' || echo '$(srcdir)/'`fft-test.c
-@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/ffttest-fft-test.Tpo $(DEPDIR)/ffttest-fft-test.Po
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='fft-test.c' object='ffttest-fft-test.o' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(ffttest_CFLAGS) $(CFLAGS) -c -o ffttest-fft-test.o `test -f 'fft-test.c' || echo '$(srcdir)/'`fft-test.c
-
-ffttest-fft-test.obj: fft-test.c
-@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(ffttest_CFLAGS) $(CFLAGS) -MT ffttest-fft-test.obj -MD -MP -MF $(DEPDIR)/ffttest-fft-test.Tpo -c -o ffttest-fft-test.obj `if test -f 'fft-test.c'; then $(CYGPATH_W) 'fft-test.c'; else $(CYGPATH_W) '$(srcdir)/fft-test.c'; fi`
-@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/ffttest-fft-test.Tpo $(DEPDIR)/ffttest-fft-test.Po
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='fft-test.c' object='ffttest-fft-test.obj' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(ffttest_CFLAGS) $(CFLAGS) -c -o ffttest-fft-test.obj `if test -f 'fft-test.c'; then $(CYGPATH_W) 'fft-test.c'; else $(CYGPATH_W) '$(srcdir)/fft-test.c'; fi`
 
 ID: $(am__tagged_files)
 	$(am__define_uniq_tagged_files); mkid -fID $$unique
