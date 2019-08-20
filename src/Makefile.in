@@ -102,7 +102,7 @@ PROGRAMS = $(bin_PROGRAMS)
 am_ffttest_OBJECTS = fft-test.$(OBJEXT)
 ffttest_OBJECTS = $(am_ffttest_OBJECTS)
 ffttest_DEPENDENCIES =
-am_metronome_OBJECTS = cli-metronome.$(OBJEXT)
+am_metronome_OBJECTS = stdin-metronome.$(OBJEXT)
 metronome_OBJECTS = $(am_metronome_OBJECTS)
 metronome_DEPENDENCIES =
 am_program_OBJECTS = program.$(OBJEXT)
@@ -254,7 +254,7 @@ program_SOURCES = program.c
 program_LDADD = -lfftw3 -lm
 ffttest_SOURCES = fft-test.c
 ffttest_LDADD = -lfftw3 -lm
-metronome_SOURCES = cli-metronome.c
+metronome_SOURCES = stdin-metronome.c
 metronome_LDADD = -lfftw3 -lm
 all: all-am
 
@@ -350,9 +350,9 @@ mostlyclean-compile:
 distclean-compile:
 	-rm -f *.tab.c
 
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/cli-metronome.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/fft-test.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/program.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/stdin-metronome.Po@am__quote@
 
 .c.o:
 @am__fastdepCC_TRUE@	$(AM_V_CC)$(COMPILE) -MT $@ -MD -MP -MF $(DEPDIR)/$*.Tpo -c -o $@ $<
