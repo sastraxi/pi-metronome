@@ -10,6 +10,7 @@ sudo apt install bluez pulseaudio-module-bluetooth python-gobject python-gobject
 
 Build the program:
 ```
+aclocal && autoconf && automake
 ./configure && make
 ```
 
