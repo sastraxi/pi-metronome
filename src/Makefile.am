@@ -1,4 +1,4 @@
-bin_PROGRAMS = program ffttest metronome
+bin_PROGRAMS = program ffttest metronome lighttest
 program_SOURCES = program.c
 program_LDADD = -lfftw3 -lm
 
@@ -7,3 +7,6 @@ ffttest_LDADD = -lfftw3 -lm
 
 metronome_SOURCES = stdin-metronome.c
 metronome_LDADD = -lfftw3 -lm -lpigpio
+
+lighttest_SOURCES = light-test.c
+lighttest_LDADD = -lm -lpigpio 
