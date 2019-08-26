@@ -6,7 +6,11 @@
 #include <string.h>
 #include <limits.h>
 
-#include "light/gpio.h"
+#define USE_LIGHT
+
+#ifdef USE_LIGHT
+	#include "light/gpio.h"
+#endif
 
 #define SEC_TO_NANOSEC 1000000000
 #define M_PI 3.14159265358979323846
@@ -40,8 +44,8 @@ int main()
 
 	my_plan = fftw_plan_dft_r2c_1d(N, in, out, FFTW_ESTIMATE);
 
-  #ifdef USE_METRONOME
-    __light_init();
+  #ifdef USE_LIGHT
+	 __light_init();
   #endif
 
 	while (1)
@@ -113,17 +117,17 @@ int main()
 		}
 
 		/* print to the console (later: turn on an LED!) */
-    double scaled = max * 1.0;
+	 double scaled = max * 1.0;
 		if (scaled > 20) {
-			#ifdef USE_METRONOME
-        setLight(0, fmin(scaled, GPIO_PWM_RANGE));
+			#ifdef USE_LIGHT
+				setLight(0, fmin(scaled, GPIO_PWM_RANGE));
 			#endif
 			printf("%.2f-%.2f hz: %f\n", max_l_freq, max_h_freq, max);
 		} else {
 			#ifdef USE_METRONOME
-        setLight(0, 0);
+				setLight(0, 0);
 			#endif
-    }
+	 }
 
 		/* record our read */
 		read_ptr += CHUNK;
