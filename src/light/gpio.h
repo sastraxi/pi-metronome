@@ -4,7 +4,7 @@
   #include <pigpio.h>
 
   /* 25 - 40,000 */
-  #define GPIO_PWM_RANGE 255
+  #define GPIO_PWM_RANGE 40000
   #define SET_PWM_RANGE_AT_INIT
 
   int GPIO_PINS[][3] = {
