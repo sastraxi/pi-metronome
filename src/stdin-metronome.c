@@ -17,7 +17,7 @@
 #define RING_BUFFER_SIZE_SEC 3.0
 
 /* this program accepts RAW 16-bit S16LE samples only */
-#define RATE 44100
+#define RATE 22050
 
 inline double magn(fftw_complex c) {
 	return c[0] * c[0] + c[1] * c[1];
@@ -25,10 +25,10 @@ inline double magn(fftw_complex c) {
 
 int main()
 {
-	const int N = 4096;
+	const int N = 1024;
 	const double N_1 = N - 1;
 	const int HALF_N = N/2;
-	const int CHUNK = N/16; // read buffer AND fft window offset
+	const int CHUNK = N/8; // read buffer AND fft window offset
 	const int RING_BUFFER_SIZE = RATE * RING_BUFFER_SIZE_SEC;
 
 	int countdown_to_fill = N;
