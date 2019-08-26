@@ -7,7 +7,7 @@
   #define GPIO_PWM_RANGE 255
   #define SET_PWM_RANGE_AT_INIT
 
-  const int** GPIO_PINS = {
+  int GPIO_PINS[][3] = {
     {2, 3, 4}
   };
 
@@ -28,7 +28,7 @@
   }
   
   inline int setLight(int pin, float red, float green, float blue) {
-    const float* colour = {red, green, blue};
+    const float colour[] = {red, green, blue};
     for (int v = 0; v < 3; ++v) {
       int rv = gpioPWM(GPIO_PINS[pin][v], colour[v]);
       if (rv != 0) return rv;
