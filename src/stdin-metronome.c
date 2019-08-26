@@ -124,7 +124,7 @@ int main()
 			#endif
 			printf("%.2f-%.2f hz: %f\n", max_l_freq, max_h_freq, max);
 		} else {
-			#ifdef USE_METRONOME
+			#ifdef USE_LIGHT
 				setLight(0, 0);
 			#endif
 	 }
