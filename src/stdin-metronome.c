@@ -117,7 +117,7 @@ int main()
 		}
 
 		/* print to the console (later: turn on an LED!) */
-	 double scaled = max * 1.0;
+	  double scaled = max * 1.0;
 		if (scaled > 20) {
 			#ifdef USE_LIGHT
 				setLight(0, fmin(scaled, GPIO_PWM_RANGE));
