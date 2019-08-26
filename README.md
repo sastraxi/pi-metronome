@@ -2,7 +2,7 @@
 
 Install dependencies:
 ```
-sudo apt install build-essential autotools-dev autoconf automake libtool libfftw3-dev
+sudo apt install build-essential autotools-dev autoconf automake libtool libfftw3-dev pigpio
 
 # runtime deps
 sudo apt install bluez pulseaudio-module-bluetooth python-gobject python-gobject-2 bluez-tools
