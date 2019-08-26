@@ -120,12 +120,12 @@ int main()
 	  double scaled = max * 1.0;
 		if (scaled > 20) {
 			#ifdef USE_LIGHT
-				setLight(0, fmin(scaled, GPIO_PWM_RANGE));
+				setLight(0, 0, fmin(scaled, GPIO_PWM_RANGE), 0);
 			#endif
 			printf("%.2f-%.2f hz: %f\n", max_l_freq, max_h_freq, max);
 		} else {
 			#ifdef USE_LIGHT
-				setLight(0, 0);
+				setLight(0, 0, 0, 0);
 			#endif
 	 }
 
