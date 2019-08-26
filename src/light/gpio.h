@@ -8,8 +8,7 @@
   #define SET_PWM_RANGE_AT_INIT
 
   const int[][] GPIO_PINS = [
-    [2, 3, 4],
-    [5, 6, 15]
+    [2, 3, 4]
   ];
 
   void __light_init(void) {
