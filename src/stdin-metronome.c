@@ -121,8 +121,9 @@ int main()
 		if (scaled > 20) {
 			#ifdef USE_LIGHT
 				setLight(0, 0, fmin(scaled, GPIO_PWM_RANGE), 0);
-			#endif
-			printf("%.2f-%.2f hz: %f\n", max_l_freq, max_h_freq, max);
+			#else
+				printf("%.2f-%.2f hz: %f\n", max_l_freq, max_h_freq, max);
+			#endif			
 		} else {
 			#ifdef USE_LIGHT
 				setLight(0, 0, 0, 0);
