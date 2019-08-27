@@ -25,10 +25,10 @@ inline double magn(fftw_complex c) {
 
 int main()
 {
-	const int N = 1024;
-	const double N_1 = N - 1;
+	const int N = 512;
+	const double N_1 = N-1;
 	const int HALF_N = N/2;
-	const int CHUNK = N/8; // read buffer AND fft window offset
+	const int CHUNK = N/16; // fft window offset
 	const int RING_BUFFER_SIZE = RATE * RING_BUFFER_SIZE_SEC;
 
 	int countdown_to_fill = N;

@@ -22,10 +22,16 @@ automake
 
 Run it:
 ```
-parec --format=s16le --device=alsa_output.firewire-0x00148605c440c13a.multichannel-output.monitor | ./src/metronome
+parec --format=s16le --rate=22050 --channels=1 --device=alsa_output.firewire-0x00148605c440c13a.multichannel-output.monitor | ./src/metronome
 ```
 
 You'll have to change the device name above with a `RUNNING` sink monitor from `pactl list`.
+
+## To make your bluetooth device discoverable
+
+```
+bluetoothctl discoverable on
+```
 
 ## Some helpful resources
 
