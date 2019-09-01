@@ -7,7 +7,7 @@
   #define GPIO_PWM_RANGE 40000
   #define SET_PWM_RANGE_AT_INIT
 
-  int GPIO_PINS[][] = {
+  int GPIO_PINS[][3] = {
     {2, 3, 4},
     {14},
     {15},
