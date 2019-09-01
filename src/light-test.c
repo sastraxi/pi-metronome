@@ -15,12 +15,15 @@ int main()
 
 	while (1)
   {
-    setLight(
+    setLightRGB(
       0,
       (float) rand() / (float) RAND_MAX * GPIO_PWM_RANGE,
       (float) rand() / (float) RAND_MAX * GPIO_PWM_RANGE,
       (float) rand() / (float) RAND_MAX * GPIO_PWM_RANGE
     );
+    setLight(1, (float) rand() / (float) RAND_MAX * GPIO_PWM_RANGE);
+    setLight(2, (float) rand() / (float) RAND_MAX * GPIO_PWM_RANGE);
+    setLight(3, (float) rand() / (float) RAND_MAX * GPIO_PWM_RANGE);
     sleep(1);
 	}
 
