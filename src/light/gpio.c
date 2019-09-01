@@ -1,5 +1,12 @@
 #include <pigpio.h>
-#include "gpio.h"  
+#include "gpio.h"
+
+int GPIO_PINS[][3] = {
+  {2, 3, 4},
+  {14},
+  {15},
+  {18}
+};
 
 void __light_init(void) {
   gpioInitialise();
@@ -18,7 +25,7 @@ void __light_terminate(void) {
   gpioTerminate();
 }
 
-inline int setLightRGB(int pin, float red, float green, float blue) {
+int setLightRGB(int pin, float red, float green, float blue) {
   const float colour[] = {red, green, blue};
   for (int v = 0; v < 3; ++v) {
     int rv = gpioPWM(GPIO_PINS[pin][v], colour[v]);
@@ -27,6 +34,6 @@ inline int setLightRGB(int pin, float red, float green, float blue) {
   return 0;
 }
 
-inline int setLight(int pin, float intensity) {
+int setLight(int pin, float intensity) {
   return gpioPWM(GPIO_PINS[pin][0], intensity);
 }

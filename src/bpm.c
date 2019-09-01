@@ -59,7 +59,7 @@ int main(int argc, char** argv)
   }
 
   const double bpm = (float) atoi(argv[1]);
-  const double hz = 1.0 / (bpm / 60.0);
+  const double rate = bpm / 60.0; // inverse of hz
   const unsigned int sleep_time = SEC_TO_MICROSEC * INV_UPDATE_HZ;
 
   __light_init();
@@ -78,12 +78,11 @@ int main(int argc, char** argv)
       printf("Rolled over! Old = %d, new = %d", base_t, t);
     }
 
-
     double p = MICROSEC_TO_SEC * (t - base_t);
     for (int i = 0; i < NUM_LIGHTS; ++i)
     {
       double delay = INV_NUM_LIGHTS * (double) i;
-      float intensity = tickfn((p + delay) * hz) * GPIO_PWM_RANGE;
+      float intensity = tickfn((p + delay) * rate) * GPIO_PWM_RANGE;
       if (i == 0) {
         setLightRGB(i, intensity, intensity, intensity);
       } else {
