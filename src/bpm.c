@@ -6,6 +6,7 @@
 #include <string.h>
 #include <limits.h>
 #include <unistd.h>
+#include <pigpio.h>
 
 #include "light/gpio.h"
 
@@ -62,6 +63,7 @@ int main(int argc, char** argv)
   const unsigned int sleep_time = SEC_TO_MICROSEC * INV_UPDATE_HZ;
 
   __light_init();
+
   setLightRGB(0, 0.0f, 0.0f, 0.0f);
   setLight(1, 0.0f);
   setLight(2, 0.0f);
@@ -89,10 +91,6 @@ int main(int argc, char** argv)
       }
     }
 
-    // setLight(1, (float) rand() / (float) RAND_MAX * GPIO_PWM_RANGE);
-    // setLight(2, (float) rand() / (float) RAND_MAX * GPIO_PWM_RANGE);
-    // setLight(3, (float) rand() / (float) RAND_MAX * GPIO_PWM_RANGE);
-    
     wait_microsec(sleep_time);
 	}
 
