@@ -62,7 +62,7 @@ int main(int argc, char** argv)
   const unsigned int sleep_time = SEC_TO_MICROSEC * INV_UPDATE_HZ;
 
   __light_init();
-  setLightRGB(0, 0.0f, 0.0f, 0.0f);
+  // setLightRGB(0, 0.0f, 0.0f, 0.0f);
   setLight(1, 0.0f);
   setLight(2, 0.0f);
   setLight(3, 0.0f);
@@ -83,7 +83,7 @@ int main(int argc, char** argv)
       double delay = INV_NUM_LIGHTS * (double) i;
       float intensity = tickfn((p + delay) * hz) * GPIO_PWM_RANGE;
       if (i == 0) {
-        setLightRGB(i, intensity, intensity, intensity);
+        // setLightRGB(i, intensity, intensity, intensity);
       } else {
         setLight(i, intensity);
       }
