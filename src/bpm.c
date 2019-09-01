@@ -85,10 +85,10 @@ int main(int argc, char** argv)
   const unsigned int sleep_time = SEC_TO_MICROSEC * hz;
 
   __light_init();
-  setLightRGB(0, 0f, 0f, 0f);
-  setLight(1, 0f);
-  setLight(2, 0f);
-  setLight(3, 0f);
+  setLightRGB(0, 0.0f, 0.0f, 0.0f);
+  setLight(1, 0.0f);
+  setLight(2, 0.0f);
+  setLight(3, 0.0f);
 
   unsigned long base_t = get_system_timer();
 	while (1)
@@ -96,7 +96,7 @@ int main(int argc, char** argv)
     const unsigned long t = get_system_timer();
     if (t < base_t) {
       // we rolled over!
-      printf('Rolled over! Old = %d, new = %d', base_t, t);
+      printf("Rolled over! Old = %d, new = %d", base_t, t);
     }
 
 
@@ -117,8 +117,6 @@ int main(int argc, char** argv)
     // setLight(3, (float) rand() / (float) RAND_MAX * GPIO_PWM_RANGE);
     
     wait_microsec(sleep_time);
-
-    t = next_t;
 	}
 
   __light_terminate();
