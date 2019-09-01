@@ -17,10 +17,10 @@
 
 const double INV_UPDATE_HZ = 1.0 / 2000.0;
 
-const int NUM_LIGHTS  = 4;
+const int NUM_LIGHTS  = 2;
 const double INV_NUM_LIGHTS = 1.0 / (double) NUM_LIGHTS;
 
-#define SIN_EXPONENT 1.0
+#define SIN_EXPONENT 15.0
 
 inline double max(double a, double b) {
   if (a > b) return a;
