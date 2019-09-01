@@ -14,3 +14,4 @@ lighttest_LDADD = -lm -lpigpio
 
 bpm_SOURCES = bpm.c
 bpm_LDADD = -lm -lpigpio
+bpm_CFLAGS = -mcpu=arm1176jzf-s -mfpu=vfp
