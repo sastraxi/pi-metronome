@@ -53,8 +53,9 @@ inline double tickfn(double p)
     ? 1.0 - 2.0 * (t - 0.5)
     : 2.0 * t;
 
-  return fabs(
-    pow(sin(t * M_2PI), SIN_EXPONENT)
+  return max(
+    pow(sin(t * M_2PI), SIN_EXPONENT),
+    0.0
   );
 }
 
