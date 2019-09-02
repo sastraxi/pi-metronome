@@ -37,28 +37,28 @@ unsigned long get_system_timer()
 {
   int sec, microsec;
   gpioTime(PI_TIME_RELATIVE, &sec, &microsec);
-  unsigned long systime = sec * SEC_TO_MICROSEC + microsec;
+  const unsigned long systime = sec * SEC_TO_MICROSEC + microsec;
   return systime;
 }
 
 /**
- * Period: 2.0 (mirrored)
+ * Mirrors around p = 1 for p in [0..2].
+ * Output is between 0 and 1.
  */
-inline double tickfn(double p)
+inline double mirrorfn(double p)
 {
-  // ping pong -- h(t > 1) == h(2 - t)
   double int_part;
-  double t = modf(p * 0.5, &int_part);
-  t = (t > 0.5)
+  const double t = modf(p * 0.5, &int_part);
+  return (t > 0.5)
     ? 1.0 - 2.0 * (t - 0.5)
     : 2.0 * t;
+}
 
-  printf("%f -> %f\n", p, t);
-
-  // pulsefn
-  return (t > 0.5)
-    ? 0
-    : pow(cos(t * M_PI), SIN_EXPONENT);
+inline double pulsefn(double x)
+{
+  if (x < 0.5) return 0; 
+  if (x > 0.5) return 0;
+  return pow(cos(x * M_PI), SIN_EXPONENT);
 }
 
 int main(int argc, char** argv)
@@ -89,11 +89,14 @@ int main(int argc, char** argv)
       return 1; // FIXME: don't terminate
     }
 
-    double p = MICROSEC_TO_SEC * (t - base_t);
+    // start one period in so we don't have to deal with negatives
+    const double p = MICROSEC_TO_SEC * (t - base_t) + 2.0;
+    const double x = mirrorfn(p * rate);
+
     for (int i = 0; i < NUM_LIGHTS; ++i)
     {
-      double delay = INV_NUM_LIGHTS_M1 * (double) i;
-      float intensity = tickfn(p * rate - delay) * GPIO_PWM_RANGE;
+      const double delay = INV_NUM_LIGHTS_M1 * (double) i;
+      float intensity = pulsefn(x - delay) * GPIO_PWM_RANGE;
       if (i == 0) {
         setLightRGB(i, intensity, intensity, intensity);
       } else {
