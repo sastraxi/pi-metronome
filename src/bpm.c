@@ -90,7 +90,7 @@ int main(int argc, char** argv)
     for (int i = 0; i < NUM_LIGHTS; ++i)
     {
       double delay = INV_NUM_LIGHTS * (double) i;
-      float intensity = tickfn((p - delay) * rate) * GPIO_PWM_RANGE;
+      float intensity = tickfn(p * rate - delay) * GPIO_PWM_RANGE;
       if (i == 0) {
         setLightRGB(i, intensity, intensity, intensity);
       } else {
