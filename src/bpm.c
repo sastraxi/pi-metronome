@@ -10,6 +10,7 @@
 
 #include "light/gpio.h"
 
+#define M_HALF_PI 1.57079632679
 #define M_PI 3.14159265358979323846
 #define M_2PI 6.28318530718
 
@@ -56,9 +57,9 @@ inline double mirrorfn(double p)
 
 inline double pulsefn(double x)
 {
-  if (x < 0.5) return 0; 
-  if (x > 0.5) return 0;
-  return pow(cos(x * M_PI), SIN_EXPONENT);
+  if (x < -1.0) return 0.0;
+  if (x > 1.0) return 0.0;
+  return pow(cos(x * M_HALF_PI), SIN_EXPONENT);
 }
 
 int main(int argc, char** argv)
