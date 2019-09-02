@@ -96,7 +96,7 @@ int main(int argc, char** argv)
     for (int i = 0; i < NUM_LIGHTS; ++i)
     {
       const double delay = INV_NUM_LIGHTS_M1 * (double) i;
-      printf("x: %f\tdelay: %f\tpulse: %f\n", p, delay, pulsefn(x - delay));
+      printf("x: %f\tdelay: %f\tpulse: %f\n", x, delay, pulsefn(x - delay));
       float intensity = pulsefn(x - delay) * GPIO_PWM_RANGE;
       if (i == 0) {
         setLightRGB(i, intensity, intensity, intensity);
