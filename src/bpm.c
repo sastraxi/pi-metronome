@@ -19,7 +19,7 @@
 const double INV_UPDATE_HZ = 1.0 / 2000.0;
 
 const int NUM_LIGHTS = 4;
-const double INV_NUM_LIGHTS = 1.0 / (double) NUM_LIGHTS;
+const double INV_NUM_LIGHTS_M1 = 1.0 / (double) (NUM_LIGHTS - 1);
 
 #define SIN_EXPONENT 15.0
 
@@ -46,13 +46,14 @@ unsigned long get_system_timer()
  */
 inline double tickfn(double p)
 {
-  // ping pong
+  // ping pong -- h(t > 1) == h(2 - t)
   double int_part;
   double t = modf(p * 0.5, &int_part);
   t = (t > 0.5)
     ? 1.0 - 2.0 * (t - 0.5)
     : 2.0 * t;
 
+  // pulsefn
   return max(
     pow(sin(t * M_2PI), SIN_EXPONENT),
     0.0
@@ -90,7 +91,7 @@ int main(int argc, char** argv)
     double p = MICROSEC_TO_SEC * (t - base_t);
     for (int i = 0; i < NUM_LIGHTS; ++i)
     {
-      double delay = INV_NUM_LIGHTS * (double) i * 2.0;
+      double delay = INV_NUM_LIGHTS_M1 * (double) i;
       float intensity = tickfn(p * rate - delay) * GPIO_PWM_RANGE;
       if (i == 0) {
         setLightRGB(i, intensity, intensity, intensity);
