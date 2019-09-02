@@ -92,11 +92,11 @@ int main(int argc, char** argv)
     // start one period in so we don't have to deal with negatives
     const double p = MICROSEC_TO_SEC * (t - base_t) + 2.0;
     const double x = mirrorfn(p * rate);
-    printf("p: %f\tx: %f\n", p, x);
 
     for (int i = 0; i < NUM_LIGHTS; ++i)
     {
       const double delay = INV_NUM_LIGHTS_M1 * (double) i;
+      printf("x: %f\tdelay: %f\tpulse: %f\n", p, delay, pulsefn(x - delay));
       float intensity = pulsefn(x - delay) * GPIO_PWM_RANGE;
       if (i == 0) {
         setLightRGB(i, intensity, intensity, intensity);
