@@ -21,7 +21,7 @@ const double INV_UPDATE_HZ = 1.0 / 2000.0;
 const int NUM_LIGHTS = 4;
 const double INV_NUM_LIGHTS_M1 = 1.0 / (double) (NUM_LIGHTS - 1);
 
-#define SIN_EXPONENT 20.0
+#define SIN_EXPONENT 21.0
 
 inline double max(double a, double b) {
   if (a > b) return a;
@@ -54,10 +54,9 @@ inline double tickfn(double p)
     : 2.0 * t;
 
   // pulsefn
-  return max(
-    pow(cos(t * M_PI), SIN_EXPONENT),
-    0.0
-  );
+  return (t > 0.5)
+    ? 0
+    : pow(cos(t * M_PI), SIN_EXPONENT);
 }
 
 int main(int argc, char** argv)
