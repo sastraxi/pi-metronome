@@ -24,11 +24,6 @@ const double INV_NUM_LIGHTS_M1 = 1.0 / (double) (NUM_LIGHTS - 1);
 
 #define SIN_EXPONENT 251.0
 
-inline double max(double a, double b) {
-  if (a > b) return a;
-  return b;
-}
-
 int wait_microsec(unsigned int n)
 {
   return gpioSleep(PI_TIME_RELATIVE, 0, n);
@@ -40,6 +35,24 @@ unsigned long get_system_timer()
   gpioTime(PI_TIME_RELATIVE, &sec, &microsec);
   const unsigned long systime = sec * SEC_TO_MICROSEC + microsec;
   return systime;
+}
+
+inline double lerp(double a, double b, double t)
+{
+  return a * (1.0 - t) + b * t;
+}
+
+/**
+ * Transforms time [0..1] => [0..1] with a certain amount of swinginess.
+ * @param amount amount of swing to apply [0..1]
+ */
+inline double swingify(double t, double amount)
+{
+  return lerp(
+    t,
+    0.5 + 0.5 * sin(M_2PI * t - M_PI),
+    amount
+  );
 }
 
 /**
@@ -64,12 +77,15 @@ inline double pulsefn(double x)
 
 int main(int argc, char** argv)
 {
-  if (argc != 2) {
-    printf("Usage: %s <bpm>\n", argv[0]);
+  if (argc != 3) {
+    printf("Usage: %s <bpm> <swinginess>\n", argv[0]);
     return 1;
   }
 
-  const double bpm = (float) atoi(argv[1]);
+  const double bpm = (double) atoi(argv[1]);
+  const double swinginess;
+  sscanf(argv[2], "%lf", &swinginess);
+
   const double rate = bpm / 60.0; // inverse of hz
   const unsigned int sleep_time = SEC_TO_MICROSEC * INV_UPDATE_HZ;
 
@@ -98,7 +114,7 @@ int main(int argc, char** argv)
     for (int i = 0; i < NUM_LIGHTS; ++i)
     {
       const double delay = INV_NUM_LIGHTS_M1 * (double) i;
-      float intensity = pulsefn(x - delay) * GPIO_PWM_RANGE;
+      float intensity = pulsefn(swingify(x - delay, swinginess)) * GPIO_PWM_RANGE;
 
       #ifdef DEBUG
         printf("x: %f\tdelay: %f\tpulse: %f\n", x, delay, pulsefn(x - delay));
