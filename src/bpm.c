@@ -47,7 +47,8 @@ unsigned long get_system_timer()
 inline double tickfn(double p)
 {
   // ping pong
-  double t = modf(p * 0.5);
+  double int_part;
+  double t = modf(p * 0.5, &int_part);
   t = (t > 0.5) ? (2.0 - 2.0 * (t - 0.5)) : 2.0 * t;
 
   return max(

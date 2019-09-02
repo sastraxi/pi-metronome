@@ -6,10 +6,10 @@ program_LDADD = -lfftw3 -lm
 ffttest_SOURCES = fft-test.c
 ffttest_LDADD = -lfftw3 -lm
 
-metronome_SOURCES = stdin-metronome.c light/gpio.c
+metronome_SOURCES =  light/gpio.c stdin-metronome.c
 metronome_LDADD = -lfftw3 -lm -lpigpio
 
-lighttest_SOURCES = light-test.c light/gpio.c
+lighttest_SOURCES = light/gpio.c light-test.c
 lighttest_LDADD = -lm -lpigpio 
 
 bpm_SOURCES = bpm.c light/gpio.c
