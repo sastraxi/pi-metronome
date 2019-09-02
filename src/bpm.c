@@ -43,14 +43,14 @@ inline double lerp(double a, double b, double t)
 }
 
 /**
- * Transforms time [0..1] => [0..1] with a certain amount of swinginess.
+ * Transforms time [-1..1] => [-1..1] with a certain amount of swinginess.
  * @param amount amount of swing to apply [0..1]
  */
 inline double swingify(double t, double amount)
 {
   return lerp(
     t,
-    0.5 + 0.5 * sin(M_2PI * t - M_PI),
+    sin(M_PI * t),
     amount
   );
 }
@@ -68,6 +68,9 @@ inline double mirrorfn(double p)
     : 2.0 * t;
 }
 
+/**
+ * Input: 
+ */
 inline double pulsefn(double x)
 {
   if (x < -1.0) return 0.0;
