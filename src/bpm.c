@@ -49,7 +49,7 @@ inline double lerp(double a, double b, double t)
 inline double swingify(double t, double amount)
 {
   double sign = t < 0.0 ? -1.0 : 1.0;
-  return sign * pow(t * sign, 1.0 + amount);
+  return 0.5 + 0.5 * sign * pow(((t * 2.0) - 1.0) * sign, 1.0 + amount);
 }
 
 /**
