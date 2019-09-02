@@ -43,13 +43,17 @@ inline double lerp(double a, double b, double t)
 }
 
 /**
- * Transforms time [-1..1] => [-1..1] with a certain amount of swinginess.
+ * Transforms time [0..1] => [0..1] with a certain amount of swinginess.
  * @param amount amount of swing to apply
  */
 inline double swingify(double t, double amount)
 {
-  double sign = t < 0.0 ? -1.0 : 1.0;
-  return 0.5 + 0.5 * sign * pow(((t * 2.0) - 1.0) * sign, 1.0 + amount);
+  if (t < 0.5) {
+    return 1.0 - swingify(1.0 - t, amount);
+  }
+  
+  const double val = 2.0 * t - 1.0;
+  return 0.5 + 0.5 * pow(val, 1.0 + amount);
 }
 
 /**
