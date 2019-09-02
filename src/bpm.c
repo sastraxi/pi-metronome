@@ -44,15 +44,12 @@ inline double lerp(double a, double b, double t)
 
 /**
  * Transforms time [-1..1] => [-1..1] with a certain amount of swinginess.
- * @param amount amount of swing to apply [0..1]
+ * @param amount amount of swing to apply
  */
 inline double swingify(double t, double amount)
 {
-  return lerp(
-    t,
-    sin(M_PI * t),
-    amount
-  );
+  double sign = t < 0.0 ? -1.0 : 1.0;
+  return sign * pow(t * sign, 1.0 + amount);
 }
 
 /**
