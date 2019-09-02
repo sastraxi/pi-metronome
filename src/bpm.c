@@ -53,7 +53,7 @@ inline double tickfn(double p)
     ? 1.0 - 2.0 * (t - 0.5)
     : 2.0 * t;
 
-  printf("%d -> %d", p, t);
+  printf("%f -> %f\n", p, t);
 
   // pulsefn
   return (t > 0.5)
