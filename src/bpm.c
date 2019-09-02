@@ -11,6 +11,7 @@
 #include "light/gpio.h"
 
 #define M_PI 3.14159265358979323846
+#define M_2PI 6.28318530718
 
 #define SEC_TO_MICROSEC 1000000
 #define MICROSEC_TO_SEC 0.000001
@@ -45,8 +46,12 @@ unsigned long get_system_timer()
  */
 inline double tickfn(double p)
 {
+  // ping pong
+  double t = modf(p * 0.5);
+  t = (t > 0.5) ? (2.0 - 2.0 * (t - 0.5)) : 2.0 * t;
+
   return max(
-    pow(sin(p * 2.0 * M_PI), SIN_EXPONENT),
+    pow(sin(t * M_2PI), SIN_EXPONENT),
     0.0
   );
 }
@@ -76,6 +81,7 @@ int main(int argc, char** argv)
     if (t < base_t) {
       // we rolled over!
       printf("Rolled over! Old = %d, new = %d", base_t, t);
+      return 1; // FIXME: don't terminate
     }
 
     double p = MICROSEC_TO_SEC * (t - base_t);
