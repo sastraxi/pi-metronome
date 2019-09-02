@@ -92,6 +92,7 @@ int main(int argc, char** argv)
     // start one period in so we don't have to deal with negatives
     const double p = MICROSEC_TO_SEC * (t - base_t) + 2.0;
     const double x = mirrorfn(p * rate);
+    printf("p: %f\tx: %f\n", p, x);
 
     for (int i = 0; i < NUM_LIGHTS; ++i)
     {
