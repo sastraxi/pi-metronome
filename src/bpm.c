@@ -19,7 +19,7 @@
 
 const double INV_UPDATE_HZ = 1.0 / 200.0;
 
-const int NUM_LIGHTS = 4;
+const int NUM_LIGHTS = 5;
 const double INV_NUM_LIGHTS_M1 = 1.0 / (double) (NUM_LIGHTS - 1);
 
 #define SIN_EXPONENT 29.0
@@ -79,6 +79,7 @@ int main(int argc, char** argv)
   setLight(1, 0.0f);
   setLight(2, 0.0f);
   setLight(3, 0.0f);
+  setLightRGB(4, 0.0f, 0.0f, 0.0f);
 
   unsigned long base_t = get_system_timer();
 	while (1)
@@ -103,7 +104,7 @@ int main(int argc, char** argv)
         printf("x: %f\tdelay: %f\tpulse: %f\n", x, delay, pulsefn(x - delay));
       #endif
 
-      if (i == 0) {
+      if (i == 0 || i == 4) {
         setLightRGB(i, intensity, intensity, intensity);
       } else {
         setLight(i, intensity);
