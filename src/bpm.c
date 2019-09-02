@@ -114,7 +114,7 @@ int main(int argc, char** argv)
     for (int i = 0; i < NUM_LIGHTS; ++i)
     {
       const double delay = INV_NUM_LIGHTS_M1 * (double) i;
-      float intensity = pulsefn(swingify(x - delay, swinginess)) * GPIO_PWM_RANGE;
+      float intensity = pulsefn(swingify(x, swinginess) - delay) * GPIO_PWM_RANGE;
 
       #ifdef DEBUG
         printf("x: %f\tdelay: %f\tpulse: %f\n", x, delay, pulsefn(x - delay));
