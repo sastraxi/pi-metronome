@@ -42,7 +42,7 @@ unsigned long get_system_timer()
 }
 
 /**
- * Period: 1.0
+ * Period: 2.0
  */
 inline double tickfn(double p)
 {
@@ -90,7 +90,7 @@ int main(int argc, char** argv)
     double p = MICROSEC_TO_SEC * (t - base_t);
     for (int i = 0; i < NUM_LIGHTS; ++i)
     {
-      double delay = INV_NUM_LIGHTS * (double) i;
+      double delay = INV_NUM_LIGHTS * (double) i * 2.0;
       float intensity = tickfn(p * rate - delay) * GPIO_PWM_RANGE;
       if (i == 0) {
         setLightRGB(i, intensity, intensity, intensity);
