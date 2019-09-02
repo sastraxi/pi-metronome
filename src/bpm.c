@@ -17,7 +17,7 @@
 #define SEC_TO_MICROSEC 1000000
 #define MICROSEC_TO_SEC 0.000001
 
-const double INV_UPDATE_HZ = 1.0 / 200.0;
+const double INV_UPDATE_HZ = 1.0 / 2000.0;
 
 const int NUM_LIGHTS = 5;
 const double INV_NUM_LIGHTS_M1 = 1.0 / (double) (NUM_LIGHTS - 1);
