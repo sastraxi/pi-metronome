@@ -17,12 +17,12 @@
 #define SEC_TO_MICROSEC 1000000
 #define MICROSEC_TO_SEC 0.000001
 
-const double INV_UPDATE_HZ = 1.0 / 20.0;
+const double INV_UPDATE_HZ = 1.0 / 200.0;
 
 const int NUM_LIGHTS = 4;
 const double INV_NUM_LIGHTS_M1 = 1.0 / (double) (NUM_LIGHTS - 1);
 
-#define SIN_EXPONENT 21.0
+#define SIN_EXPONENT 29.0
 
 inline double max(double a, double b) {
   if (a > b) return a;
@@ -97,8 +97,12 @@ int main(int argc, char** argv)
     for (int i = 0; i < NUM_LIGHTS; ++i)
     {
       const double delay = INV_NUM_LIGHTS_M1 * (double) i;
-      printf("x: %f\tdelay: %f\tpulse: %f\n", x, delay, pulsefn(x - delay));
       float intensity = pulsefn(x - delay) * GPIO_PWM_RANGE;
+
+      #ifdef DEBUG
+        printf("x: %f\tdelay: %f\tpulse: %f\n", x, delay, pulsefn(x - delay));
+      #endif
+
       if (i == 0) {
         setLightRGB(i, intensity, intensity, intensity);
       } else {
