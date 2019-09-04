@@ -9,16 +9,9 @@ from ble.constants import *
 import dbus
 import dbus.service
 
-try:
-  from gi.repository import GObject
-except ImportError:
-  import gobject as GObject
+import subprocess, thread, time
 
-import array
-from random import randint
-
-DEFAULT_BPM = 120
-
+##################################
 # N.B. our numbers are little-endian (least significant byte first)
 
 def num_to_dbus(num):
@@ -34,6 +27,8 @@ def num_to_dbus(num):
 def dbus_to_num(arr):
 	return sum([int(v) * (2 ** (i * 8)) for (i, v) in enumerate(arr)])
 
+##################################
+DEFAULT_BPM = 120
 
 class BpmService(Service):
 	BPM_SVC_UUID = '839e1106-a81b-4162-9650-e7e66cd07e1c'
@@ -41,6 +36,24 @@ class BpmService(Service):
 	def __init__(self, bus, index):
 		Service.__init__(self, bus, index, self.BPM_SVC_UUID, True)
 		self.add_characteristic(BpmCharacteristic(bus, 0, self))
+		self.process = None
+		self.thread = None
+
+	def launch_bpm(self, bpm):
+
+		def run_thread():
+			self.process = subprocess.Popen(["../src/bpm", repr(bpm)], stdin=subprocess.PIPE, stdout=subprocess.PIPE)
+			self.process.wait()
+			period = self.process.read()
+			print('output of bpm: ', period)
+			
+		if self.process is not None:
+			self.process.terminate()
+			self.thread.join()
+
+		self.thread = thread.Thread(target=run_thread, daemon=True)
+		self.thread.start()
+
 
 class BpmCharacteristic(Characteristic):
 	BPM_CHRC_UUID = 'a700e2e1-8f5a-41ef-baa6-6704802bdcbf'
@@ -58,6 +71,10 @@ class BpmCharacteristic(Characteristic):
 		return self.value
 
 	def WriteValue(self, value, options):
-		print('BpmCharacteristic Write: ' + repr(value))
-		self.value = value
-		print('Decoded as: ' + repr(dbus_to_num(value)))
+		new_bpm = dbus_to_num(self.value)
+		if new_bpm != dbus_to_num(value):
+			print('Setting BPM to ' + repr(new_bpm))
+			self.value = value
+			self.service.launch_bpm(new_bpm)
+
+
