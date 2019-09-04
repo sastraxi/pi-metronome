@@ -53,7 +53,8 @@ class BpmService(Service):
       self.process.terminate()
       self.thread.join()
 
-    self.thread = threading.Thread(target=run_thread, daemon=True)
+    self.thread = threading.Thread(target=run_thread)
+    self.thread.daemon = True
     self.thread.start()
 
 
