@@ -1,4 +1,4 @@
-from __future__ import print_function
+from __future__ import print_function, absolute_import
 import dbus
 import dbus.exceptions
 import dbus.mainloop.glib
@@ -9,6 +9,7 @@ try:
   from gi.repository import GObject
 except ImportError:
   import gobject as GObject
+
 import ble.advertising as advertising
 import server
 import argparse

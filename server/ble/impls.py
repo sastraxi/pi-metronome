@@ -1,10 +1,10 @@
-import Characteristic from .characteristic
-import Service from .service
-import Descriptor from .descriptor
+from __future__ import print_function, absolute_import
+from .characteristic import Characteristic
+from .service import Service
+from .descriptor import Descriptor
+from . import exceptions
 
-import .exceptions
-
-import * from .constants
+from .constants import *
 
 import array
 from random import randint

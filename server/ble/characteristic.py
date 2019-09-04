@@ -1,9 +1,9 @@
-from __future__ import print_function
+from __future__ import print_function, absolute_import
 import dbus
 import dbus.service
 
-import .exceptions
-import DBUS_PROP_IFACE, GATT_CHRC_IFACE from .constants
+from . import exceptions
+from .constants import DBUS_PROP_IFACE, GATT_CHRC_IFACE
 
 class Characteristic(dbus.service.Object):
 	"""

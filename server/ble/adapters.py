@@ -1,10 +1,10 @@
-from __future__ import print_function
+from __future__ import print_function, absolute_import
 import dbus
 import dbus.exceptions
 import dbus.mainloop.glib
 import dbus.service
 
-import * from .constants
+from .constants import *
 
 def find_adapter(bus, adapter_interface_name, adapter_name):
 	remote_om = dbus.Interface(bus.get_object(BLUEZ_SERVICE_NAME, '/'), DBUS_OM_IFACE)

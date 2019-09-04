@@ -1,14 +1,14 @@
-from __future__ import print_function
+from __future__ import print_function, absolute_import
 import dbus
 import dbus.exceptions
 import dbus.mainloop.glib
 import dbus.service
 import functools
 
-import .exceptions
-import .adapters
+from . import exceptions
+from . import adapters
 
-import * from .constants
+from .constants import *
 
 class Advertisement(dbus.service.Object):
 	PATH_BASE = '/org/bluez/example/advertisement'

@@ -1,9 +1,9 @@
-from __future__ import print_function
+from __future__ import print_function, absolute_import
 import dbus
 import dbus.service
-import .exceptions
+from . import exceptions
 
-import GATT_SERVICE_IFACE, DBUS_PROP_IFACE from .constants
+from .constants import GATT_SERVICE_IFACE, DBUS_PROP_IFACE
 
 class Service(dbus.service.Object):
 	"""

@@ -1,4 +1,4 @@
-from __future__ import print_function
+from __future__ import print_function, absolute_import
 import dbus
 import dbus.mainloop.glib
 import dbus.service
