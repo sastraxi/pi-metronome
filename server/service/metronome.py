@@ -34,7 +34,7 @@ class BpmCharacteristic(Characteristic):
 				['read', 'write'],
 				service)
 		self.value = []
-		self.add_descriptor(TestDescriptor(bus, 0, self))
+		# self.add_descriptor(TestDescriptor(bus, 0, self))
 
 	def ReadValue(self, options):
 		print('TestCharacteristic Read: ' + repr(self.value))
