@@ -40,6 +40,7 @@ class BpmService(Service):
 		self.thread = None
 
 	def launch_bpm(self, bpm):
+		print('launch bpm', bpm)
 
 		def run_thread():
 			self.process = subprocess.Popen(["../src/bpm", repr(bpm)], stdin=subprocess.PIPE, stdout=subprocess.PIPE)
