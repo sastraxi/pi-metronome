@@ -38,7 +38,7 @@ class BpmService(Service):
 	BPM_SVC_UUID = '839e1106-a81b-4162-9650-e7e66cd07e1c'
 
 	def __init__(self, bus, index):
-		Service.__init__(self, bus, index, self.TEST_SVC_UUID, True)
+		Service.__init__(self, bus, index, self.BPM_SVC_UUID, True)
 		self.add_characteristic(BpmCharacteristic(bus, 0, self))
 
 class BpmCharacteristic(Characteristic):
@@ -47,7 +47,7 @@ class BpmCharacteristic(Characteristic):
 	def __init__(self, bus, index, service):
 		Characteristic.__init__(
 				self, bus, index,
-				self.TEST_CHRC_UUID,
+				self.BPM_CHRC_UUID,
 				['read', 'write'],
 				service)
 		self.value = num_to_dbus(DEFAULT_BPM)
