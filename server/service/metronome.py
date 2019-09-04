@@ -1,10 +1,10 @@
 from __future__ import print_function, absolute_import
-from ..ble.characteristic import Characteristic
-from ..ble.service import Service
-from ..ble.descriptor import Descriptor
-from ..ble import exceptions
+from ble.characteristic import Characteristic
+from ble.service import Service
+from ble.descriptor import Descriptor
+from ble import exceptions
 
-from ..ble.constants import *
+from ble.constants import *
 
 import dbus
 import dbus.service
