@@ -34,6 +34,7 @@ def num_to_dbus(num):
 def dbus_to_num(arr):
 	return sum([int(v) * (2 ** (i * 8)) for (i, v) in enumerate(arr)])
 
+
 class BpmService(Service):
 	BPM_SVC_UUID = '839e1106-a81b-4162-9650-e7e66cd07e1c'
 
@@ -53,10 +54,10 @@ class BpmCharacteristic(Characteristic):
 		self.value = num_to_dbus(DEFAULT_BPM)
 
 	def ReadValue(self, options):
-		print('TestCharacteristic Read: ' + repr(self.value))
+		print('BpmCharacteristic Read: ' + repr(self.value))
 		return self.value
 
 	def WriteValue(self, value, options):
-		print('TestCharacteristic Write: ' + repr(value))
-		print('Decoded as ' + dbus_to_num(value))
+		print('BpmCharacteristic Write: ' + repr(value))
 		self.value = value
+		print('Decoded as ' + dbus_to_num(value))
