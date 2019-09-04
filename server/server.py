@@ -13,7 +13,7 @@ except ImportError:
 import ble.adapters as adapters
 
 from ble.constants import *
-from ble.impls import *
+from service.metronome import *
 
 class Application(dbus.service.Object):
 	"""
@@ -23,9 +23,7 @@ class Application(dbus.service.Object):
 		self.path = '/'
 		self.services = []
 		dbus.service.Object.__init__(self, bus, self.path)
-		self.add_service(HeartRateService(bus, 0))
-		self.add_service(BatteryService(bus, 1))
-		self.add_service(TestService(bus, 2))
+		self.add_service(BpmService(bus, 0))
 
 	def get_path(self):
 		return dbus.ObjectPath(self.path)
@@ -70,6 +68,6 @@ def gatt_server_main(mainloop, bus, adapter_name):
 	print('Registering GATT application...')
 
 	service_manager.RegisterApplication(app.get_path(), {},
-									reply_handler=register_app_cb,
-									error_handler=functools.partial(register_app_error_cb, mainloop))
+			reply_handler=register_app_cb,
+			error_handler=functools.partial(register_app_error_cb, mainloop))
 
