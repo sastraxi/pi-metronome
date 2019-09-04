@@ -50,10 +50,12 @@ class BpmService(Service):
     if self.process is not None:
       self.process.terminate()
       self.thread.join()
+      self.process = None
 
-    self.thread = threading.Thread(target=run_thread)
-    self.thread.daemon = True
-    self.thread.start()
+    if bpm != 0:
+      self.thread = threading.Thread(target=run_thread)
+      self.thread.daemon = True
+      self.thread.start()
 
 
 class BpmCharacteristic(Characteristic):
