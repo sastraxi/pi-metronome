@@ -40,8 +40,6 @@ class BpmService(Service):
     self.add_characteristic(BpmCharacteristic(bus, 0, self))
 
   def launch_bpm(self, bpm):
-    print('launch bpm', repr(self), bpm)
-
     def run_thread():
       print('run thread!', repr(self))
       self.process = subprocess.Popen(["/home/pi/dev/pi-metronome/src/bpm", repr(bpm), "0"], stdin=subprocess.PIPE, stdout=subprocess.PIPE)
@@ -75,8 +73,8 @@ class BpmCharacteristic(Characteristic):
     return self.value
 
   def WriteValue(self, value, options):
-    new_bpm = dbus_to_num(self.value)
-    if new_bpm != dbus_to_num(value):
+    new_bpm = dbus_to_num(value)
+    if new_bpm != dbus_to_num(self.value):
       print('Setting BPM to ' + repr(new_bpm))
       self.value = value
       self.service.launch_bpm(new_bpm)
