@@ -60,4 +60,4 @@ class BpmCharacteristic(Characteristic):
 	def WriteValue(self, value, options):
 		print('BpmCharacteristic Write: ' + repr(value))
 		self.value = value
-		print('Decoded as ' + dbus_to_num(value))
+		print('Decoded as: ' + repr(dbus_to_num(value)))
