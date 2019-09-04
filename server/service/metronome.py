@@ -67,6 +67,7 @@ class BpmCharacteristic(Characteristic):
 				['read', 'write'],
 				service)
 		self.value = num_to_dbus(DEFAULT_BPM)
+		self.service.launch_bpm(DEFAULT_BPM)
 
 	def ReadValue(self, options):
 		print('BpmCharacteristic Read: ' + repr(self.value))
