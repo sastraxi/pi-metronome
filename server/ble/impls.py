@@ -6,6 +6,9 @@ from . import exceptions
 
 from .constants import *
 
+import dbus
+import dbus.service
+
 try:
   from gi.repository import GObject
 except ImportError:
