@@ -36,7 +36,7 @@ class BpmService(Service):
   def __init__(self, bus, index):
     Service.__init__(self, bus, index, self.BPM_SVC_UUID, True)
     self.add_characteristic(BpmCharacteristic(bus, 0, self))
-    self.process = None
+    self.proc = None
     self.thread = None
 
   def launch_bpm(self, bpm):
@@ -44,13 +44,13 @@ class BpmService(Service):
 
     def run_thread():
       print('run thread!', repr(self))
-      self.process = subprocess.Popen(["../src/bpm", repr(bpm)], stdin=subprocess.PIPE, stdout=subprocess.PIPE)
-      self.process.wait()
-      period = self.process.read()
+      self.proc = subprocess.Popen(["../src/bpm", repr(bpm)], stdin=subprocess.PIPE, stdout=subprocess.PIPE)
+      self.proc.wait()
+      period = self.proc.read()
       print('output of bpm: ', period)
       
-    if self.process is not None:
-      self.process.terminate()
+    if self.proc is not None:
+      self.proc.terminate()
       self.thread.join()
 
     self.thread = thread.Thread(target=run_thread, daemon=True)
