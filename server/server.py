@@ -12,8 +12,8 @@ except ImportError:
 
 import ble.adapters as adapters
 
-import * from ble.constants
-import * from ble.impls
+from ble.constants import *
+from ble.impls import *
 
 class Application(dbus.service.Object):
 	"""
