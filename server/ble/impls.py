@@ -6,6 +6,11 @@ from . import exceptions
 
 from .constants import *
 
+try:
+  from gi.repository import GObject
+except ImportError:
+  import gobject as GObject
+
 import array
 from random import randint
 
