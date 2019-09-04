@@ -9,7 +9,7 @@ from ble.constants import *
 import dbus
 import dbus.service
 
-import subprocess, thread, time
+import subprocess, threading, time
 
 ##################################
 # N.B. our numbers are little-endian (least significant byte first)
@@ -53,7 +53,7 @@ class BpmService(Service):
       self.process.terminate()
       self.thread.join()
 
-    self.thread = thread.Thread(target=run_thread, daemon=True)
+    self.thread = threading.Thread(target=run_thread, daemon=True)
     self.thread.start()
 
 
