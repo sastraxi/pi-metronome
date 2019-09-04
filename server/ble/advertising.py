@@ -86,6 +86,8 @@ class Advertisement(dbus.service.Object):
 class TestAdvertisement(Advertisement):
 	def __init__(self, bus, index):
 		Advertisement.__init__(self, bus, index, 'peripheral')
+
+		# TODO: remove these service UUIDs and introspect the services configured
 		self.add_service_uuid('180D')
 		self.add_service_uuid('180F')
 		self.add_manufacturer_data(0xffff, [0x00, 0x01, 0x02, 0x03, 0x04])

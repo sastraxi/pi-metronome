@@ -17,15 +17,32 @@ except ImportError:
 import array
 from random import randint
 
+DEFAULT_BPM = 120
+
+# N.B. our numbers are little-endian (least significant byte first)
+
+def num_to_dbus(num):
+	if num == 0: return [dbus.byte(0)]
+
+	arr = dbus.Array()
+	while num > 0:
+		arr.append(dbus.Byte(num % 256))
+		num = num >> 8
+
+	return arr
+
+def dbus_to_num(arr):
+	return sum([int(v) * (2 ** (i * 8)) for (i, v) in enumerate(arr)])
+
 class BpmService(Service):
-	TEST_SVC_UUID = '12345678-1234-5678-1234-56789abcdef0'
+	BPM_SVC_UUID = '839e1106-a81b-4162-9650-e7e66cd07e1c'
 
 	def __init__(self, bus, index):
 		Service.__init__(self, bus, index, self.TEST_SVC_UUID, True)
 		self.add_characteristic(BpmCharacteristic(bus, 0, self))
 
 class BpmCharacteristic(Characteristic):
-	TEST_CHRC_UUID = '12345678-1234-5678-1234-56789abcdef1'
+	BPM_CHRC_UUID = 'a700e2e1-8f5a-41ef-baa6-6704802bdcbf'
 
 	def __init__(self, bus, index, service):
 		Characteristic.__init__(
@@ -33,8 +50,7 @@ class BpmCharacteristic(Characteristic):
 				self.TEST_CHRC_UUID,
 				['read', 'write'],
 				service)
-		self.value = []
-		# self.add_descriptor(TestDescriptor(bus, 0, self))
+		self.value = num_to_dbus(DEFAULT_BPM)
 
 	def ReadValue(self, options):
 		print('TestCharacteristic Read: ' + repr(self.value))
@@ -42,26 +58,5 @@ class BpmCharacteristic(Characteristic):
 
 	def WriteValue(self, value, options):
 		print('TestCharacteristic Write: ' + repr(value))
+		print('Decoded as ' + dbus_to_num(value))
 		self.value = value
-
-class TestDescriptor(Descriptor):
-	"""
-	Dummy test descriptor. Returns a static value.
-
-	"""
-	TEST_DESC_UUID = '12345678-1234-5678-1234-56789abcdef2'
-
-	def __init__(self, bus, index, characteristic):
-		Descriptor.__init__(
-				self, bus, index,
-				self.TEST_DESC_UUID,
-				['read', 'write'],
-				characteristic)
-
-	def ReadValue(self, options):
-		return [
-				dbus.Byte('T'), dbus.Byte('e'), dbus.Byte('s'), dbus.Byte('t')
-		]
-
-	def WriteValue(self, value, options):
-		print("TestDescriptor Write!", value, options)
