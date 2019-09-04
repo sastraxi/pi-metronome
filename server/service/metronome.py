@@ -35,9 +35,9 @@ class BpmService(Service):
 
   def __init__(self, bus, index):
     Service.__init__(self, bus, index, self.BPM_SVC_UUID, True)
-    self.add_characteristic(BpmCharacteristic(bus, 0, self))
     self.process = None
     self.thread = None
+    self.add_characteristic(BpmCharacteristic(bus, 0, self))
 
   def launch_bpm(self, bpm):
     print('launch bpm', repr(self), bpm)
