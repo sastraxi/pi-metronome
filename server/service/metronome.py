@@ -46,7 +46,7 @@ class BpmService(Service):
       print('run thread!', repr(self))
       self.process = subprocess.Popen(["/home/pi/dev/pi-metronome/src/bpm", repr(bpm), "0"], stdin=subprocess.PIPE, stdout=subprocess.PIPE)
       self.process.wait()
-      period = self.process.read()
+      period = self.process.stdout.read()
       print('output of bpm: ', period)
       
     if self.process is not None:
