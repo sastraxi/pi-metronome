@@ -43,6 +43,7 @@ class BpmService(Service):
 		print('launch bpm', bpm)
 
 		def run_thread():
+			print('run thread!', repr(self))
 			self.process = subprocess.Popen(["../src/bpm", repr(bpm)], stdin=subprocess.PIPE, stdout=subprocess.PIPE)
 			self.process.wait()
 			period = self.process.read()
